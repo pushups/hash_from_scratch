@@ -1,0 +1,2 @@
+Start here -
+https://github.com/jamesroutley/write-a-hash-table/tree/master/05-methods
