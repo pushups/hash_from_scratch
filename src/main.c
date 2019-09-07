@@ -1,13 +1,47 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "hash_table.h"
+
+
+void debug(ht_hash_table* ht, char* key) {
+  printf("key: %s has value %s\n", key, ht_search(ht, key));
+}
+
+int num_digits(int x) {
+
+  if (x == 0) {
+    return 1;
+  }
+  
+  int count = 0;
+  while(x != 0) {
+    x = x / 10;
+    count++;
+  }
+
+  return count;
+}
 
 int main() {
   ht_hash_table* ht = ht_new();
-  ht_del_hash_table(ht);
-  const char* s = "alphabetsoup";
 
-  for (int attempt = 1; attempt < 10; attempt++) {
-    int bucket_val = ht_get_hash(s, 53, attempt);
-    printf("bucket for %s = %d attempt = %d\n", s, bucket_val, attempt);
+  char* key;
+  char* value = "test value";
+
+  for (int i = 0; i < 20000; i++) {
+    int size = num_digits(i);
+    int string_size = size*sizeof(char) + 1;
+    key = (char*) malloc(string_size);
+    snprintf(key, string_size, "%d", i);
+    ht_insert(ht, key, value);
+  }
+
+  for (int i=0; i < 20000; i++) {
+    int size = num_digits(i);
+    int string_size = size*sizeof(char) + 1;
+    key = (char*) malloc(string_size);
+    snprintf(key, string_size, "%d", i);
+    ht_delete(ht, key);
   }
 }
