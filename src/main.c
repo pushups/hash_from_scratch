@@ -18,25 +18,39 @@ int num_digits(int x) {
   return count;
 }
 
+char* copy_int_to_string(int i) {
+  int size = num_digits(i);
+  int string_size = size*sizeof(char) + 1;
+  char* str = (char*) malloc(string_size);
+  snprintf(str, string_size, "%d", i);
+  return str;
+}
+
 int main() {
   ht_hash_table* ht = ht_new();
 
   char* key;
   char* value = "test value";
 
-  for (int i = 0; i < 20000; i++) {
-    int size = num_digits(i);
-    int string_size = size*sizeof(char) + 1;
-    key = (char*) malloc(string_size);
-    snprintf(key, string_size, "%d", i);
+  int num_items = 2000000;
+
+  printf("Creating: %d keys", num_items);
+  for (int i = 0; i < num_items; i++) {
+    key = copy_int_to_string(i);
     ht_insert(ht, key, value);
+    char* found_val = ht_search(ht, key);
+    printf("%s = %s\n", key, found_val);
   }
 
-  for (int i=0; i < 20000; i++) {
-    int size = num_digits(i);
-    int string_size = size*sizeof(char) + 1;
-    key = (char*) malloc(string_size);
-    snprintf(key, string_size, "%d", i);
+  printf("Deleting: %d keys", num_items);
+  for (int i=0; i < num_items; i++) {
+    key = copy_int_to_string(i);
     ht_delete(ht, key);
+    char* found_val = ht_search(ht, key);
+    printf("%s = %s\n", key, found_val);
   }
+
+  printf("Final count: %d, Final size: %d\n", ht->count, ht->size);
+
+  return 0;
 }
