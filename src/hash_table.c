@@ -6,8 +6,8 @@
 #include "hash_table.h"
 #include "prime.h"
 
-#define HT_PRIME_1 151
-#define HT_PRIME_2 173
+#define HT_PRIME_1 173
+#define HT_PRIME_2 151
 #define HT_INITIAL_BASE_SIZE 50
 
 static ht_item HT_DELETED_ITEM = { NULL, NULL };
@@ -79,7 +79,7 @@ static void ht_del_item(ht_item* i) {
 void ht_del_hash_table(ht_hash_table* ht) {
   for (int i = 0; i < ht->size; i++) {
     ht_item* item = ht->items[i];
-    if (item != NULL) {
+    if (item != NULL && item != &HT_DELETED_ITEM) {
       ht_del_item(item);
     }
   }
