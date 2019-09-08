@@ -60,13 +60,11 @@ static void ht_resize(ht_hash_table* ht, const int base_size) {
 
 static void ht_resize_up(ht_hash_table* ht) {
   const int new_size = ht->base_size * 2;
-  printf("resizing up, to %d\n", new_size);
   ht_resize(ht, new_size);
 }
 
 static void ht_resize_down(ht_hash_table* ht) {
   const int new_size = ht->base_size / 2;
-  printf("resizing down, to %d\n", new_size);
   ht_resize(ht, new_size);
 }
 
@@ -100,9 +98,7 @@ int ht_hash(const char *s, const int a, const int m) {
 
 int ht_get_hash(const char *s, const int num_buckets, const int attempt) {
   const int hash_a = ht_hash(s, HT_PRIME_1, num_buckets);
-
   int hash_b = ht_hash(s, HT_PRIME_2, num_buckets);
-  printf("s: %s, hash_a: %d, hash_b: %d, num_buckets: %d, attempt: %d\n", s, hash_a, hash_b, num_buckets, attempt);
 
   if ((hash_b % num_buckets) == 0) {
     hash_b = hash_b + 1;
@@ -130,11 +126,9 @@ void ht_insert(ht_hash_table *ht, const char* key, const char* value) {
       }
     }
     index = ht_get_hash(item->key, ht->size, i);
-    printf("Test index: %d\n", index);
     cur_item = ht->items[index];
     i++;
   }
-  printf("ht->count %d, ht->size %d\n", ht->count, ht->size);
   ht->items[index] = item;
   ht->count++;
 }

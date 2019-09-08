@@ -3,11 +3,6 @@
 #include <string.h>
 #include "hash_table.h"
 
-
-void debug(ht_hash_table* ht, char* key) {
-  printf("key: %s has value %s\n", key, ht_search(ht, key));
-}
-
 int num_digits(int x) {
 
   if (x == 0) {
